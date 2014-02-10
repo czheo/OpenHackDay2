@@ -30,12 +30,11 @@ public class MainActivity extends Activity implements OnClickListener {
 		
 		// get data from amazon
 		Map<String, String> keyMap = new HashMap<String, String>();  
-		keyMap.put("AWSAccessKeyId", "AKIAIDOUP55F5PEKC4WA");  
-		keyMap.put("Version", "2011-08-01");  
+		keyMap.put("AWSAccessKeyId", "AKIAICMG2OHEJZLCRWPQ");   
 		keyMap.put("Operation", "ItemSearch");  
-		keyMap.put("Keywords", "9784798029351");  // bar code 
+		keyMap.put("Keywords", "9784763132888");  // bar code 
 		keyMap.put("SearchIndex", "Books");
-		keyMap.put("AssociateTag", "idhitsu-22");  
+		keyMap.put("AssociateTag", "kingarthur911-22");
 		keyMap.put("Service", "AWSECommerceService");  
 		SignedRequestsHelper signedRequestsHelper;
 		try {
