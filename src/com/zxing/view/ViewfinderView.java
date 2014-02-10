@@ -27,15 +27,14 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
-
-import com.ericssonlabs.R;
+import com.openhackday2.R;
 import com.google.zxing.ResultPoint;
 import com.zxing.camera.CameraManager;
 
 /**
  * This view is overlaid on top of the camera preview. It adds the viewfinder rectangle and partial
  * transparency outside it, as well as the laser scanner animation and result points.
- * �Զ����View������ʱ�м���ʾ��
+ * �ｽﾔｶ�ｽ�ｽ�ｽ�ｽView�ｽ�ｽ�ｽ�ｽ�ｽ�ｽﾊｱ�ｽﾐｼ�ｽ�ｽ�ｽﾊｾ�ｽ�ｽ
  */
 public final class ViewfinderView extends View {
 
