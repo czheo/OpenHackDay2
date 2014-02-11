@@ -51,12 +51,14 @@ public class MainActivity extends Activity implements OnClickListener {
 			Bundle bundle = data.getExtras();
 			String scanResult = bundle.getString("result");
 			// get data from amazon
-			Map<String, String> keyMap = new HashMap<String, String>();  
-			keyMap.put("AWSAccessKeyId", "AKIAICMG2OHEJZLCRWPQ");   
-			keyMap.put("Operation", "ItemSearch");  
-			keyMap.put("Keywords", scanResult);  // bar code 
-			keyMap.put("SearchIndex", "Books");
+			Map<String, String> keyMap = new HashMap<String, String>();
 			keyMap.put("AssociateTag", "kingarthur911-22");
+			keyMap.put("IdType", "ISBN");
+			keyMap.put("ItemId", scanResult);
+			keyMap.put("Operation", "ItemLookup"); 
+			keyMap.put("ResponseGroup", "Large");
+			keyMap.put("ReviewPage", "1");
+			keyMap.put("SearchIndex", "Books");
 			keyMap.put("Service", "AWSECommerceService");  
 			SignedRequestsHelper signedRequestsHelper;
 			try {
