@@ -12,12 +12,19 @@
         android:src="@drawable/image" />
 
     <View style="@style/app_line_o" />
-    
-    <Button 
+
+    <Button
         android:id="@+id/detail_button"
         style="@style/app_default_match"
-        android:text="Photo"
-        />
+        android:text="Photo" />
+
+    <TextView
+        style="@style/app_default_match"
+        android:text="OCR:" />
+
+    <TextView
+        android:id="@+id/detail_ocr_show"
+        style="@style/app_default_match" />
 
     <TextView
         style="@style/app_default_match"
