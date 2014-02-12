@@ -26,8 +26,8 @@ public class SignedRequestsHelper {
 
 	// 日本用
 	private String endpoint = "ecs.amazonaws.jp"; // must be lowercase
-	private String awsAccessKeyId = "AKIAIDOUP55F5PEKC4WA";
-	private String awsSecretKey = "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";
+	private String awsAccessKeyId = "AKIAICMG2OHEJZLCRWPQ";
+	private String awsSecretKey = "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";
 
 	private SecretKeySpec secretKeySpec = null;
 	private Mac mac = null;
@@ -53,7 +53,7 @@ public class SignedRequestsHelper {
 
 		String hmac = hmac(toSign);
 		String sig = percentEncodeRfc3986(hmac);
-		String url = "http://" + endpoint + REQUEST_URI + "?" + canonicalQS + "&Signature=" + sig;
+		String url = "http://" + endpoint + REQUEST_URI + "?" + canonicalQS + "&Signature=" + sig.replaceAll("%0A", "");
 
 		return url;
 	}
@@ -84,47 +84,50 @@ public class SignedRequestsHelper {
 		  } catch (UnsupportedEncodingException e) {  
 		   throw new RuntimeException(UTF8_CHARSET + " is unsupported!", e);  
 		  }  
-		  return signature;  
+		  return signature;
 	}
 
 	private String timestamp() {
 		String timestamp = null;
-		Calendar cal = Calendar.getInstance();
-		DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-		dfm.setTimeZone(TimeZone.getTimeZone("GMT"));
-		timestamp = dfm.format(cal.getTime());
-		return timestamp;
+        Calendar cal = Calendar.getInstance();
+        DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'.000Z'");
+        dfm.setTimeZone(TimeZone.getTimeZone("GMT"));
+        timestamp = dfm.format(cal.getTime());
+        return timestamp;
 	}
 
 	private String canonicalize(SortedMap<String, String> sortedParamMap) {
 		if (sortedParamMap.isEmpty()) {
-			return "";
-		}
+            return "";
+        }
 
-		StringBuffer buffer = new StringBuffer();
-		Iterator<Map.Entry<String, String>> iter = sortedParamMap.entrySet().iterator();
+        StringBuffer buffer = new StringBuffer();
+        Iterator<Map.Entry<String, String>> iter = sortedParamMap.entrySet().iterator();
 
-		while (iter.hasNext()) {
-			Map.Entry<String, String> kvpair = iter.next();
-			buffer.append(percentEncodeRfc3986(kvpair.getKey()));
-			buffer.append("=");
-			buffer.append(percentEncodeRfc3986(kvpair.getValue()));
-			if (iter.hasNext()) {
-				buffer.append("&");
-			}
-		}
-		String cannoical = buffer.toString();
-		return cannoical;
+        while (iter.hasNext()) {
+            Map.Entry<String, String> kvpair = iter.next();
+            buffer.append(percentEncodeRfc3986(kvpair.getKey()));
+            buffer.append("=");
+            buffer.append(percentEncodeRfc3986(kvpair.getValue()));
+            if (iter.hasNext()) {
+                buffer.append("&");
+            }
+        }
+        String cannoical = buffer.toString();
+        return cannoical;
 	}
 
 	private String percentEncodeRfc3986(String s) {
 		String out;
-		try {
-			out = URLEncoder.encode(s, UTF8_CHARSET).replace("+", "%20").replace("*", "%2A").replace("%7E", "~").replace("¥s", "");
-		} catch (UnsupportedEncodingException e) {
-			out = s;
-		}
-		return out;
+        try {
+            out = URLEncoder.encode(s, UTF8_CHARSET)
+                .replace("+", "%20")
+                .replace("*", "%2A")
+                .replace("%7E", "~");
+        } catch (UnsupportedEncodingException e) {
+            out = s;
+        }
+        return out;
 	}
 
 }
