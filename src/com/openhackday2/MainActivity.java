@@ -21,6 +21,7 @@ import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
@@ -104,6 +105,8 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 	        	Intent intent = new Intent(MainActivity.this, MineListActivity.class);
+	        	ImageItem item = (ImageItem)view.getTag();
+	        	intent.putExtra("bookid", item.key);
 	            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 	            startActivity(intent);
 			}
@@ -297,19 +300,26 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 						        	
 						        	
 						        	String bookid = xmlReader.getItemValue("itemid");
-						        	String imageUrl = xmlReader.getItemValue("imageurl");
-						        	
-						        	Log.v("Pref", "set:" + bookid + "@" +bookSet.toString());
-						        	bookSet.add(bookid);
-						        	prefsEditor.putStringSet("books", bookSet);
-						        	prefsEditor.putString(bookid + ":image", imageUrl);
-						        	prefsEditor.apply();
-						            item.key = bookid;
-						            item.url = imageUrl;
-						            
-						            mAdapter.add(item);
-						            mAdapter.notifyDataSetChanged();
-						            //mBookGridView.invalidateViews();
+						        	String imageUrl = xmlReader
+										.getItemValue("imageurl");
+						        	String bookTitle = xmlReader.getItemValue("booktitle");
+						        	String bookAuthor = xmlReader.getItemValue("bookauthor");
+						        	if (bookid != null && imageUrl != null
+										&& !bookSet.contains(bookid)) {
+						        		Log.v("Pref", "set:" + bookid + "@"
+											+ bookSet.toString());
+						        		bookSet.add(bookid);
+						        		prefsEditor.putStringSet("books", bookSet);
+						        		prefsEditor.putString(bookid + ":image",
+						        				imageUrl);
+						        		prefsEditor.putString(bookid + ":title", bookTitle);
+						        		prefsEditor.putString(bookid + ":author", bookAuthor);
+						        		prefsEditor.apply();
+						        		item.key = bookid;
+						        		item.url = imageUrl;
+
+						        		mAdapter.add(item);
+						        	}
 								}
 					        });
 					}

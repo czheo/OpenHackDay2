@@ -52,6 +52,22 @@ public class ParseXML {
 							}
 						}
 						point.put("imageurl", xmlPullParser.nextText());
+					} else if (name.equalsIgnoreCase("ITEMATTRIBUTES")) {
+						while ((eventType = xmlPullParser.next()) > XmlPullParser.END_DOCUMENT) {
+							if (eventType == XmlPullParser.START_TAG) {
+								String childname = xmlPullParser.getName();
+								if (childname.equalsIgnoreCase("TITLE") && !point.containsKey("booktitle")) {
+									point.put("booktitle", xmlPullParser.nextText());
+								} else if (childname.equalsIgnoreCase("AUTHOR") && !point.containsKey("bookauthor")) {
+									point.put("bookauthor", xmlPullParser.nextText());
+								}
+							} else if (eventType == XmlPullParser.END_TAG) {
+								String childname = xmlPullParser.getName();
+								if (childname.equalsIgnoreCase("ITEMATTRIBUTES")) {
+									break;
+								}
+							}
+						}		
 					}
 					break;
 				case XmlPullParser.END_TAG:
