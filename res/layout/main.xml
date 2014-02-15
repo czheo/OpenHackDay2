@@ -78,7 +78,7 @@
             android:layout_weight=".25"
             android:layout_height="match_parent"
             android:background="@drawable/common_button_small"
-            android:text="皆タイムライン" />
+            android:text="みんなのタイムライン" />
     </LinearLayout>
 
 </LinearLayout>
