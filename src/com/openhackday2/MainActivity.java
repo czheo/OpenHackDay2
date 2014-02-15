@@ -53,6 +53,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	private Handler mHandler;
 	private GridView mBookGridView;
 	private LruCache<String, Bitmap> mLruCache;
+	private String loadBookXml;
 	
 	private int maxSize = 10 * 1024 * 1024;
 
@@ -229,7 +230,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 					public void run() {
 					       Log.v("AmazonAPI", ">url: " + urlStr);
 
-					        String xml = null;
 					        try {
 					            DefaultHttpClient httpClient = new DefaultHttpClient();
 					            HttpParams params = httpClient.getParams();
@@ -244,7 +244,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 
 					            if (httpResponse != null && httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 					                HttpEntity httpEntity = httpResponse.getEntity();
-					                xml = EntityUtils.toString(httpEntity, "UTF-8");
+					                loadBookXml = EntityUtils.toString(httpEntity, "UTF-8");
 					                httpEntity.consumeContent();
 					            }
 					            httpClient.getConnectionManager().shutdown();
@@ -261,14 +261,17 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 					        	Log.v("AmazonAPI", e.toString());
 					        
 					        }
-					        Log.v("AmazonAPI", "xml: " + xml);
+					        Log.v("AmazonAPI", "xml: " + loadBookXml);
 					        
 					        mHandler.post(new Runnable() {
 								@Override
 								public void run() {
+									ParseXML xmlReader = new ParseXML();
+									xmlReader.parse(loadBookXml);
+									
 						        	ImageItem item = new ImageItem();
-						            item.key = "item2";
-						            item.url = "http://ecx.images-amazon.com/images/I/41iUErzQk8L.jpg";
+						            item.key = xmlReader.getItemValue("itemid");
+						            item.url = xmlReader.getItemValue("imageurl");
 						            mAdapter.add(item);
 						            mAdapter.notifyDataSetChanged();
 						            //mBookGridView.invalidateViews();
