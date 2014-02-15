@@ -18,7 +18,7 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="みんな感動" />
+            android:text="みんなの感動" />
 
         <TextView
             android:id="@+id/all_textview_hatena"
@@ -26,7 +26,7 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="みんなはてな" />
+            android:text="みんなのはてな" />
     </LinearLayout>
 
     <ImageView

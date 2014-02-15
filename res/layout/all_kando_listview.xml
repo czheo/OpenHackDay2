@@ -7,10 +7,14 @@
 
     <TextView
         android:id="@+id/all_kando_listview_datetime"
+        android:layout_width="match_parent"
+        android:gravity="right"
         style="@style/app_default" />
 
     <TextView
         android:id="@+id/all_kando_listview_text"
+        android:layout_width="match_parent"
+    	android:layout_height="35dp"
         style="@style/app_default" />
 
 </LinearLayout>
