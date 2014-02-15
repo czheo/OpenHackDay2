@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#f8f4ed"
+    android:background="@drawable/back"
     android:orientation="vertical" >
 
     <ImageView
@@ -10,7 +10,6 @@
         android:layout_height="112px"
         android:layout_gravity="center"
     	android:layout_weight="5"
-        android:src="@drawable/header"
         android:gravity="center"
         />
 
