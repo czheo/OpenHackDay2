@@ -58,9 +58,13 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	private GridView mBookGridView;
 	private LruCache<String, Bitmap> mLruCache;
 	private String loadBookXml;
-	
 	private int maxSize = 10 * 1024 * 1024;
+	
+	private SharedPreferences prefs;
+	private SharedPreferences.Editor prefsEditor;
+	private Set<String> bookSet;
 
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -78,22 +82,22 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		mHandler = new Handler();
 		mAdapter = new BookAdapter(this);
 		mBookGridView.setAdapter(mAdapter);
-    	ImageItem item = new ImageItem();
-		SharedPreferences prefs = this.getSharedPreferences(
+    	
+		prefs = this.getSharedPreferences(
 				"com.openhackday2", Context.MODE_PRIVATE);
-		Set<String> defVal = new HashSet<String>();
-		defVal.add("item1");
-		defVal.add("item2");
-		defVal.add("item3");
-        Set<String> books = prefs.getStringSet("books", defVal);
-        Iterator<String> itr = books.iterator();
+		
+        bookSet = prefs.getStringSet("books", new HashSet<String>());
+        
+        Iterator<String> itr = bookSet.iterator();
         while(itr.hasNext()){
-        	String bookId = itr.next();
-        	Log.i("SharedPreference", bookId);
+        	String bookid = itr.next();
+        	String imageurl = prefs.getString(bookid + ":image", "http://www.mnit.ac.in/new/PortalProfile/images/faculty/noimage.jpg");
+        	Log.v("Pref", "get:" + bookid + "@" + imageurl);
+        	ImageItem item = new ImageItem();
+        	item.key = bookid;
+        	item.url = imageurl;
+        	mAdapter.add(item);
         }
-		item.key = "item1";
-        item.url = "http://ecx.images-amazon.com/images/I/518Q2woIvyL.jpg";
-        mAdapter.add(item);
 
 		mBookGridView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
@@ -286,8 +290,20 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 									xmlReader.parse(loadBookXml);
 									
 						        	ImageItem item = new ImageItem();
-						            item.key = xmlReader.getItemValue("itemid");
-						            item.url = xmlReader.getItemValue("imageurl");
+						        	prefsEditor = prefs.edit();
+						        	
+						        	
+						        	String bookid = xmlReader.getItemValue("itemid");
+						        	String imageUrl = xmlReader.getItemValue("imageurl");
+						        	
+						        	Log.v("Pref", "set:" + bookid + "@" +bookSet.toString());
+						        	bookSet.add(bookid);
+						        	prefsEditor.putStringSet("books", bookSet);
+						        	prefsEditor.putString(bookid + ":image", imageUrl);
+						        	prefsEditor.apply();
+						            item.key = bookid;
+						            item.url = imageUrl;
+						            
 						            mAdapter.add(item);
 						            mAdapter.notifyDataSetChanged();
 						            //mBookGridView.invalidateViews();
