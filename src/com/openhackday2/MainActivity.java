@@ -171,25 +171,26 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
         }
         
         public View getView(int position, View convertView, ViewGroup parent) {
-        	ImageItem item = getItem(position);
-            ImageView imageView;
-                imageView = new ImageView(getContext());
-                imageView.setLayoutParams(new GridView.LayoutParams(200, 200));
-                imageView.setTag(item);
-                if (item.bitmap == null) {
-                	Bitmap bitmap = mLruCache.get(item.key);
-	                if (bitmap != null) {
-	                    // キャッシュに存在
-	                    Log.i("imageCache", "キャッシュあり=" + item.key);
-	                    setBitmap(item);
-	                } else {
-	                    // キャッシュになし
-	                    Log.i("imageCache", "キャッシュなし=" + item.key);
-	                    Bundle bundle = new Bundle();
-	                    bundle.putSerializable("item", item);
-	                    getSupportLoaderManager().initLoader(position, bundle, callbacks);
-	                }
-                }
+			ImageItem item = getItem(position);
+			ImageView imageView;
+			imageView = new ImageView(getContext());
+			imageView.setLayoutParams(new GridView.LayoutParams(300, 300));
+			imageView.setTag(item);
+			if (item.bitmap == null) {
+				Bitmap bitmap = mLruCache.get(item.key);
+				if (bitmap != null) {
+					// キャッシュに存在
+					Log.i("imageCache", "キャッシュあり=" + item.key);
+					setBitmap(item);
+				} else {
+					// キャッシュになし
+					Log.i("imageCache", "キャッシュなし=" + item.key);
+					Bundle bundle = new Bundle();
+					bundle.putSerializable("item", item);
+					getSupportLoaderManager().initLoader(position, bundle,
+							callbacks);
+				}
+			}
                 //imageView.setAdjustViewBounds(false);
                 //imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 //imageView.setPadding(8, 8, 8, 8);
