@@ -3,8 +3,7 @@ package com.openhackday2;
 import java.io.File;
 import java.io.IOException;
 
-import com.googlecode.tesseract.android.TessBaseAPI;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -21,8 +20,11 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.webkit.WebView;
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.Toast;
+
+import com.googlecode.tesseract.android.TessBaseAPI;
 
 public class DetailActivity extends Activity implements OnClickListener {
 	private ImageView mImage;
@@ -32,6 +34,10 @@ public class DetailActivity extends Activity implements OnClickListener {
 	private static final String DEFAULT_LANGUAGE = "jpn";
 	private static final String IMAGE_PATH = Environment.getExternalStorageDirectory() + "/open_hack_day.jpg";
 
+	private WebView webview;
+	private String mHtmlData = "";
+
+	@SuppressLint({ "SetJavaScriptEnabled", "JavascriptInterface" })
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -40,7 +46,29 @@ public class DetailActivity extends Activity implements OnClickListener {
 
 		mImage = (ImageView) findViewById(R.id.detail_image);
 		findViewById(R.id.detail_button).setOnClickListener(this);
+		findViewById(R.id.edit_button).setOnClickListener(this);
 
+		// edit
+		webview = (WebView) this.findViewById(R.id.webview);
+		webview.getSettings().setJavaScriptEnabled(true);
+
+		webview.loadUrl("file:///android_asset/index.html");
+		HtmlShow hs = new HtmlShow();
+		webview.addJavascriptInterface(hs, "MyContent");
+
+	}
+
+	public class HtmlShow {
+
+		private String str;
+
+		public String getContent() {
+			return mHtmlData;
+		}
+
+		public void saveWebviewData(String str) {
+			Toast.makeText(DetailActivity.this, str, Toast.LENGTH_SHORT).show();
+		}
 	}
 
 	@Override
@@ -73,6 +101,10 @@ public class DetailActivity extends Activity implements OnClickListener {
 					startActivityForResult(intent, 0);
 				}
 			}).create().show();
+		} else if (id == R.id.edit_button) {
+//			Intent intent = new Intent(this, DetailActivity.class);
+//			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//			startActivity(intent);
 		}
 
 	}
@@ -104,6 +136,7 @@ public class DetailActivity extends Activity implements OnClickListener {
 		return newbmp;
 	}
 
+	@SuppressLint("JavascriptInterface")
 	protected void ocr() {
 
 		BitmapFactory.Options options = new BitmapFactory.Options();
@@ -169,7 +202,12 @@ public class DetailActivity extends Activity implements OnClickListener {
 			recognizedText = recognizedText.replaceAll("[^a-zA-Z0-9]+", " ");
 		}
 		if (recognizedText.length() != 0) {
-			((TextView) findViewById(R.id.detail_ocr_show)).setText(recognizedText.trim());
+			mHtmlData = recognizedText.trim();
+//			((TextView) findViewById(R.id.detail_ocr_show)).setText(mHtmlData);
+
+			webview.loadUrl("file:///android_asset/index.html");
+			HtmlShow hs = new HtmlShow();
+			webview.addJavascriptInterface(hs, "MyContent");
 		}
 	}
 }

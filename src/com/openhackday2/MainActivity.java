@@ -103,7 +103,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-	        	Intent intent = new Intent(MainActivity.this, ListTabActivity.class);
+	        	Intent intent = new Intent(MainActivity.this, MineListActivity.class);
 	            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 	            startActivity(intent);
 			}
@@ -126,6 +126,9 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		mResultTextView = (TextView) this.findViewById(R.id.tv_scan_result);
 
 		findViewById(R.id.btn_scan_barcode).setOnClickListener(this);
+		findViewById(R.id.main).setOnClickListener(this);
+		findViewById(R.id.main_my).setOnClickListener(this);
+		findViewById(R.id.main_all).setOnClickListener(this);
 	}
 	
 	/**
@@ -324,6 +327,18 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
         if (id == R.id.btn_scan_barcode) {
         	Intent openCameraIntent = new Intent(MainActivity.this,CaptureActivity.class);
 			startActivityForResult(openCameraIntent, 0);
+        }else if (id == R.id.main) {
+        	Intent intent = new Intent(MainActivity.this,MainActivity.class);
+        	intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+        }else if (id == R.id.main_my) {
+        	Intent intent = new Intent(MainActivity.this,MyTimeLineActivity.class);
+        	intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+        }else if (id == R.id.main_all) {
+        	Intent intent = new Intent(MainActivity.this,AllTimeLineActivity.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
         }
 	}
 }

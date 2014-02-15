@@ -6,14 +6,11 @@
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/list_tab_friend_add"
         style="@style/app_default"
-        android:text="lalalalala" />
+        android:text="QQQ" />
 
-    <ListView
-        android:id="@+id/list_tab_friend_listview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-    </ListView>
+    <TextView
+        style="@style/app_default"
+        android:text="AAA" />
 
 </LinearLayout>

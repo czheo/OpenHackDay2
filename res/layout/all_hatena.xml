@@ -5,15 +5,12 @@
     android:background="@color/beige"
     android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/list_tab_my_add"
+    <TextView
         style="@style/app_default"
-        android:text="Add" />
+        android:text="QQQ" />
 
-    <ListView
-        android:id="@+id/list_tab_my_listview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-    </ListView>
+    <TextView
+        style="@style/app_default"
+        android:text="AAA" />
 
 </LinearLayout>

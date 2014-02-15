@@ -28,13 +28,13 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class ListTabActivity extends Activity implements OnClickListener, OnPageChangeListener {
+public class AllTimeLineActivity extends Activity implements OnClickListener, OnPageChangeListener {
 	private ViewPager mViewPager;
 	private ImageView mImageView;
-	private TextView mTextViewMy, mTextViewFriend;
+	private TextView mTextViewKando, mTextViewHatena;
 	private View mViewMy, mViewFriend;
 	private List<View> mViews;
-	private ListView mMyListView,mFriendListView;
+	private ListView mMyListView;
 	private int mOffset = 0;
 	private int mCurrIndex = 0;
 	private int mImageWidth = 0;
@@ -45,34 +45,32 @@ public class ListTabActivity extends Activity implements OnClickListener, OnPage
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.list_tab);
+		setContentView(R.layout.all_timeline);
 
-		mViewPager = (ViewPager) findViewById(R.id.list_tab_viewpager);
-		mImageView = (ImageView) findViewById(R.id.list_tab_cursor);
-		mTextViewMy = (TextView) findViewById(R.id.list_tab_textview_my);
-		mTextViewFriend = (TextView) findViewById(R.id.list_tab_textview_friend);
+		mViewPager = (ViewPager) findViewById(R.id.all_viewpager);
+		mImageView = (ImageView) findViewById(R.id.all_cursor);
+		mTextViewKando = (TextView) findViewById(R.id.all_textview_kando);
+		mTextViewHatena = (TextView) findViewById(R.id.all_textview_hatena);
 
 		LayoutInflater inflater = getLayoutInflater();
-		mViewMy = inflater.inflate(R.layout.list_tab_my, null);
-		mViewFriend = inflater.inflate(R.layout.list_tab_friend, null);
+		mViewMy = inflater.inflate(R.layout.all_kando, null);
+		mViewFriend = inflater.inflate(R.layout.all_hatena, null);
 
 		mViews = new ArrayList<View>();
 		mViews.add(mViewMy);
 		mViews.add(mViewFriend);
 
-		mViewPager.setAdapter(new ListTabViewPagerAdapter(mViews));
+		mViewPager.setAdapter(new ViewPagerAdapter(mViews));
 		mViewPager.setCurrentItem(0);
 		mViewPager.setOnPageChangeListener(this);
 
-		mTextViewMy.setOnClickListener(this);
-		mTextViewFriend.setOnClickListener(this);
+		mTextViewKando.setOnClickListener(this);
+		mTextViewHatena.setOnClickListener(this);
 	
-		// My View
-		mMyListView =(ListView) mViewMy.findViewById(R.id.list_tab_my_listview);
-		
+		mMyListView =(ListView) mViewMy.findViewById(R.id.all_kando_listview);
 
 		
-		ListTabMyListviewAdapter myListViewAdapter = new ListTabMyListviewAdapter(this);
+		AllKandoListviewAdapter myListViewAdapter = new AllKandoListviewAdapter(this);
 		mMyListView.setAdapter(myListViewAdapter);
 		
 		mMyListView.setOnItemClickListener(new OnItemClickListener() {
@@ -88,7 +86,7 @@ public class ListTabActivity extends Activity implements OnClickListener, OnPage
 		
 		initImageView();
 
-		mViewMy.findViewById(R.id.list_tab_my_add).setOnClickListener(this);
+//		mViewMy.findViewById(R.id.list_tab_all_add).setOnClickListener(this);
 //		findViewById(R.id.list_tab_save_button).setOnClickListener(this);
 
 	}
@@ -107,11 +105,11 @@ public class ListTabActivity extends Activity implements OnClickListener, OnPage
 	@Override
 	public void onClick(View v) {
 		int id = v.getId();
-        if (id == R.id.list_tab_my_add) {
-        	Intent intent = new Intent(this, DetailActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-        }
+//        if (id == R.id.list_tab_all_add) {
+//        	Intent intent = new Intent(this, DetailActivity.class);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//            startActivity(intent);
+//        }
 	}
 
 	@Override

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f8f4ed"
+    android:orientation="vertical" >
+
+    <TextView
+        style="@style/app_label_h2"
+        android:text="タイトル" />
+
+    <Button
+        android:id="@+id/mine_list_add_button"
+        style="@style/app_default_match"
+        android:text="Add" />
+
+    <ListView
+        android:id="@+id/mine_list_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </ListView>
+    
+</LinearLayout>

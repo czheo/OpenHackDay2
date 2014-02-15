@@ -1,40 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/beige"
-    android:orientation="vertical" >
+    android:layout_height="match_parent" >
 
-    <ImageView
-        android:id="@+id/detail_image"
-        style="@style/app_default"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/image" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical" >
 
-    <View style="@style/app_line_o" />
+        <ImageView
+            android:id="@+id/detail_image"
+            style="@style/app_default"
+            android:contentDescription="@string/app_name" />
 
-    <Button
-        android:id="@+id/detail_button"
-        style="@style/app_default_match"
-        android:text="Photo" />
+        <View style="@style/app_line_o" />
 
-    <TextView
-        style="@style/app_default_match"
-        android:text="OCR:" />
+        <Button
+            android:id="@+id/detail_button"
+            style="@style/app_default_match"
+            android:text="Photo" />
 
-    <TextView
-        android:id="@+id/detail_ocr_show"
-        style="@style/app_default_match" />
+        <TextView
+            style="@style/app_default_match"
+            android:text="OCR:" />
 
-    <TextView
-        style="@style/app_default_match"
-        android:text="review" />
+        <WebView
+            android:id="@+id/webview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-    <EditText style="@style/app_default_match" />
-    
-    <Button
-        android:id="@+id/ok_button"
-        style="@style/app_default_match"
-        android:text="確定" />
+        <TextView
+            style="@style/app_default_match"
+            android:text="review" />
 
-</LinearLayout>
+        <EditText style="@style/app_default_match" />
+
+        <Button
+            android:id="@+id/edit_button"
+            style="@style/app_default_match"
+            android:text="Eidt" />
+    </LinearLayout>
+
+</ScrollView>

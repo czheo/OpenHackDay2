@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-public class ListTabMyListviewAdapter extends BaseAdapter{
+public class AllKandoListviewAdapter extends BaseAdapter{
 	
 	static class ViewHolder{
 	    public TextView datetime; 
@@ -18,7 +18,7 @@ public class ListTabMyListviewAdapter extends BaseAdapter{
 	private LayoutInflater mInflater;
 	private Context mContext;
 	
-	public ListTabMyListviewAdapter (Context context){
+	public AllKandoListviewAdapter (Context context){
 		mContext = context;
 		mInflater = LayoutInflater.from(mContext);
 	}
@@ -50,9 +50,9 @@ public class ListTabMyListviewAdapter extends BaseAdapter{
         if(convertView == null) {
             holder = new ViewHolder();
             
-            convertView = mInflater.inflate(R.layout.list_tab_my_listview, null);
-            holder.datetime = (TextView)convertView.findViewById(R.id.list_tab_my_listview_datetime);
-            holder.text = (TextView)convertView.findViewById(R.id.list_tab_my_listview_text);
+            convertView = mInflater.inflate(R.layout.all_kando_listview, null);
+            holder.datetime = (TextView)convertView.findViewById(R.id.all_kando_listview_datetime);
+            holder.text = (TextView)convertView.findViewById(R.id.all_kando_listview_text);
             
             convertView.setTag(holder);
         }else {

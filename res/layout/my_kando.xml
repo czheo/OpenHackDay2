@@ -5,12 +5,10 @@
     android:background="@color/beige"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/list_tab_my_listview_datetime"
-        style="@style/app_default" />
-
-    <TextView
-        android:id="@+id/list_tab_my_listview_text"
-        style="@style/app_default" />
+    <ListView
+        android:id="@+id/my_kando_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </ListView>
 
 </LinearLayout>
