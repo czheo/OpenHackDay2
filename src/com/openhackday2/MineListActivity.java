@@ -34,14 +34,17 @@ import android.widget.TextView;
 
 public class MineListActivity extends Activity implements OnClickListener {
 	private ListView mListView;
+	private TextView mTextView;
 	private SharedPreferences prefs;
-	private Set<String> bookSet;
+	private String bookId;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.mine_list);
+		Intent i = getIntent();
+		bookId = i.getStringExtra("bookid");
 
 		//list view 
 		mListView = (ListView) findViewById(R.id.mine_list_listview);
@@ -62,9 +65,10 @@ public class MineListActivity extends Activity implements OnClickListener {
 		prefs = this.getSharedPreferences(
 				"com.openhackday2", Context.MODE_PRIVATE);
 		
-        bookSet = prefs.getStringSet("books", new HashSet<String>());
+        String bookTitle = prefs.getString(bookId + ":title", "");
+        mTextView = (TextView) findViewById(R.id.mine_title);
+        mTextView.setText(bookTitle);
         
-
 		// mViewMy.findViewById(R.id.list_tab_my_add).setOnClickListener(this);
 		findViewById(R.id.mine_list_add_button).setOnClickListener(this);
 
