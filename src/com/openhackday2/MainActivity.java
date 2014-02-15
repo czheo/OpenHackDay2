@@ -82,7 +82,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		mHandler = new Handler();
 		mAdapter = new BookAdapter(this);
 		mBookGridView.setAdapter(mAdapter);
-    	ImageItem item = new ImageItem();
+    	
 		prefs = this.getSharedPreferences(
 				"com.openhackday2", Context.MODE_PRIVATE);
 		
@@ -93,6 +93,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
         	String bookid = itr.next();
         	String imageurl = prefs.getString(bookid + ":image", "http://www.mnit.ac.in/new/PortalProfile/images/faculty/noimage.jpg");
         	Log.v("Pref", "get:" + bookid + "@" + imageurl);
+        	ImageItem item = new ImageItem();
         	item.key = bookid;
         	item.url = imageurl;
         	mAdapter.add(item);
