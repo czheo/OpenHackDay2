@@ -75,6 +75,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		mBookGridView.setAdapter(mAdapter);
     	ImageItem item = new ImageItem();
         item.key = "item1";
+        item.url = "http://ecx.images-amazon.com/images/I/518Q2woIvyL.jpg";
         mAdapter.add(item);
 
 		mBookGridView.setOnItemClickListener(new OnItemClickListener() {

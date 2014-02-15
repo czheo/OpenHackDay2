@@ -50,7 +50,7 @@
         android:columnWidth="60dp"
         android:gravity="center"
         android:stretchMode="columnWidth"
-        android:numColumns="4"
+        android:numColumns="3"
         android:padding="10dp"
         android:verticalSpacing="15dp"
         android:horizontalSpacing="10dp" />
