@@ -2,12 +2,18 @@ package com.openhackday2;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -36,6 +42,10 @@ public class DetailActivity extends Activity implements OnClickListener {
 
 	private WebView webview;
 	private String mHtmlData = "";
+	private SharedPreferences.Editor prefsEditor;
+	private SharedPreferences prefs;
+	private Set<String> recordSet;
+	private String bookId;
 
 	@SuppressLint({ "SetJavaScriptEnabled", "JavascriptInterface" })
 	@Override
@@ -43,7 +53,8 @@ public class DetailActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.detail);
-
+		Intent i = getIntent();
+		bookId = i.getStringExtra("bookid");
 		mImage = (ImageView) findViewById(R.id.detail_image);
 		findViewById(R.id.detail_button).setOnClickListener(this);
 		findViewById(R.id.edit_button).setOnClickListener(this);
@@ -55,6 +66,20 @@ public class DetailActivity extends Activity implements OnClickListener {
 		webview.loadUrl("file:///android_asset/index.html");
 		HtmlShow hs = new HtmlShow();
 		webview.addJavascriptInterface(hs, "MyContent");
+		
+		prefs = this.getSharedPreferences(
+				"com.openhackday2", Context.MODE_PRIVATE);
+		
+		//dumy
+		prefsEditor = prefs.edit();
+		recordSet = prefs.getStringSet(bookId + ":mine_records", new HashSet<String>());
+		String recordId = "record" + (recordSet.size() + 1);
+		recordSet.add(recordId);
+    	prefsEditor.putStringSet(bookId + ":mine_records", recordSet);
+    	prefsEditor.putString("mine_" + recordId + ":record", "とーーーーても感動した！！！！！！！");
+    	SimpleDateFormat DF = new SimpleDateFormat("yyyy-MM-dd");
+    	prefsEditor.putString("mine_" + recordId + ":recordtime", DF.format(new Date()));
+    	prefsEditor.apply();
 
 	}
 
@@ -68,6 +93,15 @@ public class DetailActivity extends Activity implements OnClickListener {
 
 		public void saveWebviewData(String str) {
 			Toast.makeText(DetailActivity.this, str, Toast.LENGTH_SHORT).show();
+			prefsEditor = prefs.edit();
+			recordSet = prefs.getStringSet(bookId + ":mine_records", new HashSet<String>());
+			String recordId = "record" + (recordSet.size() + 1);
+			recordSet.add(recordId);
+        	prefsEditor.putStringSet(bookId + ":mine_records", recordSet);
+        	prefsEditor.putString("mine_" + recordId + ":record", str);
+        	SimpleDateFormat DF = new SimpleDateFormat("yyyy-MM-dd");
+        	prefsEditor.putString("mine_" + recordId + ":recordtime", DF.format(new Date()));
+        	prefsEditor.apply();
 		}
 	}
 

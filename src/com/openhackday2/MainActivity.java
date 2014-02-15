@@ -53,7 +53,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import com.zxing.activity.CaptureActivity;
 
 public class MainActivity extends FragmentActivity implements OnClickListener {
-	private TextView mResultTextView;
 	private BookAdapter mAdapter;
 	private Handler mHandler;
 	private GridView mBookGridView;
@@ -125,8 +124,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
             }
         });
-        
-		mResultTextView = (TextView) this.findViewById(R.id.tv_scan_result);
 
 		findViewById(R.id.btn_scan_barcode).setOnClickListener(this);
 		findViewById(R.id.main).setOnClickListener(this);
@@ -250,7 +247,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 			try {
 				signedRequestsHelper = new SignedRequestsHelper();
 				final String urlStr = signedRequestsHelper.sign(keyMap);
-				mResultTextView.setText(scanResult);
 				new Thread(new Runnable() {
 					@Override
 					public void run() {
