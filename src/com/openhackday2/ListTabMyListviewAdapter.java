@@ -1,6 +1,7 @@
 package com.openhackday2;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,9 @@ public class ListTabMyListviewAdapter extends BaseAdapter{
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
+		SharedPreferences prefs = mContext.getSharedPreferences(
+			      "com.openhackday2", Context.MODE_PRIVATE);
+		
 		ViewHolder holder = null;
         if(convertView == null) {
             holder = new ViewHolder();

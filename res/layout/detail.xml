@@ -31,5 +31,10 @@
         android:text="review" />
 
     <EditText style="@style/app_default_match" />
+    
+    <Button
+        android:id="@+id/ok_button"
+        style="@style/app_default_match"
+        android:text="確定" />
 
 </LinearLayout>
