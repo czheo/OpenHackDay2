@@ -5,12 +5,14 @@
     android:background="#f8f4ed"
     android:orientation="vertical" >
 
-    <TextView
-        style="@style/app_label_h1_ob"
+    <ImageView
+        android:layout_width="720px"
+        android:layout_height="112px"
         android:layout_gravity="center"
-        android:layout_weight="5"
+    	android:layout_weight="5"
+        android:src="@drawable/header"
         android:gravity="center"
-        android:text="@string/app_name" />
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,7 +33,7 @@
     <GridView
         android:id="@+id/bookGrid"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="470dp"
         android:columnWidth="60dp"
         android:gravity="center"
         android:horizontalSpacing="10dp"
@@ -42,35 +44,39 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginTop="10dp"
         android:orientation="horizontal" >
 
         <TextView
             android:id="@+id/btn_scan_barcode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:background="@drawable/common_button_small"
+            android:layout_weight=".25"
             android:text="@string/add" />
 
         <TextView
             android:id="@+id/main"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight=".25"
+            android:layout_height="match_parent"
             android:background="@drawable/common_button_small"
             android:text="本棚" />
 
         <TextView
             android:id="@+id/main_my"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight=".25"
+            android:layout_height="match_parent"
             android:background="@drawable/common_button_small"
             android:text="マイタイムライン" />
 
         <TextView
             android:id="@+id/main_all"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight=".25"
+            android:layout_height="match_parent"
             android:background="@drawable/common_button_small"
             android:text="皆タイムライン" />
     </LinearLayout>
