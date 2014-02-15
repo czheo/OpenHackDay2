@@ -6,7 +6,9 @@ import java.util.List;
 import com.zxing.activity.CaptureActivity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -20,6 +22,8 @@ import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -66,8 +70,21 @@ public class ListTabActivity extends Activity implements OnClickListener, OnPage
 		// My View
 		mMyListView =(ListView) mViewMy.findViewById(R.id.list_tab_my_listview);
 		
+
+		
 		ListTabMyListviewAdapter myListViewAdapter = new ListTabMyListviewAdapter(this);
 		mMyListView.setAdapter(myListViewAdapter);
+		
+		mMyListView.setOnItemClickListener(new OnItemClickListener() {
+			  @Override
+			  public void onItemClick(AdapterView<?> parent, View view,
+			    int position, long id) {
+			
+				  Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
+		            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		            startActivity(intent);
+			  }
+		});
 		
 		initImageView();
 

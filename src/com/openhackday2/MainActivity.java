@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -22,6 +25,7 @@ import org.json.JSONException;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -75,7 +79,19 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		mAdapter = new BookAdapter(this);
 		mBookGridView.setAdapter(mAdapter);
     	ImageItem item = new ImageItem();
-        item.key = "item1";
+		SharedPreferences prefs = this.getSharedPreferences(
+				"com.openhackday2", Context.MODE_PRIVATE);
+		Set<String> defVal = new HashSet<String>();
+		defVal.add("item1");
+		defVal.add("item2");
+		defVal.add("item3");
+        Set<String> books = prefs.getStringSet("books", defVal);
+        Iterator<String> itr = books.iterator();
+        while(itr.hasNext()){
+        	String bookId = itr.next();
+        	Log.i("SharedPreference", bookId);
+        }
+		item.key = "item1";
         item.url = "http://ecx.images-amazon.com/images/I/518Q2woIvyL.jpg";
         mAdapter.add(item);
 
