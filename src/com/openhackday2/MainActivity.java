@@ -124,11 +124,12 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	        int id = loader.getId();
 	        getSupportLoaderManager().destroyLoader(id);
 	        // メモリキャッシュに登録する
-	        ImageItem item = ((ImageLoader) loader).item;
-	        Log.i("imagecache", "キャッシュに登録=" + item.key);
-	        mLruCache.put(item.key, bitmap);
-	        item.bitmap = bitmap;
-	        setBitmap(item);
+			ImageItem item = ((ImageLoader) loader).item;
+			Log.i("imagecache", "キャッシュに登録=" + item.key);
+			mLruCache.put(item.key, bitmap);
+			item.bitmap = bitmap;
+			setBitmap(item);
+	        
 	    }
 	    @Override
 	    public void onLoaderReset(Loader<Bitmap> loader) {
@@ -272,8 +273,9 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 						        	ImageItem item = new ImageItem();
 						            item.key = xmlReader.getItemValue("itemid");
 						            item.url = xmlReader.getItemValue("imageurl");
-						            mAdapter.add(item);
-						            mAdapter.notifyDataSetChanged();
+						            if (item.key != null && item.url != null) {
+							            mAdapter.add(item);
+						            }
 						            //mBookGridView.invalidateViews();
 								}
 					        });
