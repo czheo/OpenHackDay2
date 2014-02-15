@@ -34,7 +34,9 @@
             style="@style/app_default_match"
             android:text="review" />
 
-        <EditText style="@style/app_default_match" />
+        <EditText 
+            android:id="@+id/comment"
+            style="@style/app_default_match" />
 
         <Button
             android:id="@+id/edit_button"

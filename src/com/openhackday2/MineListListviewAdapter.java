@@ -11,7 +11,8 @@ public class MineListListviewAdapter extends ArrayAdapter<CommentItem> {
 	
 	static class ViewHolder{
 	    public TextView datetime; 
-	    public TextView text;
+	    public TextView record;
+	    public TextView comment;
 	}
 	
 	public MineListListviewAdapter(Context context) {
@@ -33,14 +34,16 @@ public class MineListListviewAdapter extends ArrayAdapter<CommentItem> {
             
             convertView = mInflater.inflate(R.layout.mine_list_listview, null);
             holder.datetime = (TextView)convertView.findViewById(R.id.mine_list_listview_datetime);
-            holder.text = (TextView)convertView.findViewById(R.id.mine_list_listview_text);
+            holder.record = (TextView)convertView.findViewById(R.id.mine_list_listview_record);
+            holder.comment = (TextView)convertView.findViewById(R.id.mine_list_listview_comment);
             convertView.setTag(holder);
         }else {
             holder = (ViewHolder)convertView.getTag();
         }
         
         holder.datetime.setText(item.datetime);
-        holder.text.setText(item.comment);
+        holder.comment.setText(item.comment);
+        holder.record.setText(item.record);
 		
 		return convertView;
 	}

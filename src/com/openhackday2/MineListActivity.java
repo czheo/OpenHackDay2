@@ -37,6 +37,7 @@ public class MineListActivity extends Activity implements OnClickListener {
 	private TextView mTextView;
 	private SharedPreferences prefs;
 	private String bookId;
+	private String bookTitle;
 	private Set<String> recordSet;
 
 	@Override
@@ -50,7 +51,7 @@ public class MineListActivity extends Activity implements OnClickListener {
 		prefs = this.getSharedPreferences(
 				"com.openhackday2", Context.MODE_PRIVATE);
 		
-        String bookTitle = prefs.getString(bookId + ":title", "");
+		bookTitle = prefs.getString(bookId + ":title", "");
         mTextView = (TextView) findViewById(R.id.mine_title);
         mTextView.setText(bookTitle);
         
@@ -75,12 +76,14 @@ public class MineListActivity extends Activity implements OnClickListener {
         Iterator<String> itr = recordSet.iterator();
         while(itr.hasNext()){
         	String recordid = itr.next();
-        	String record = prefs.getString("mine_" + recordid + ":record", "");
-        	String recordTime = prefs.getString("mine_" + recordid + ":recordtime", "");
+        	String record = prefs.getString(bookId + ":mine_" + recordid + ":record", "");
+        	String comment = prefs.getString(bookId + ":mine_" + recordid + ":comment", "");
+        	String recordTime = prefs.getString(bookId + ":mine_" + recordid + ":recordtime", "");
         	CommentItem commentItem = new CommentItem();
         	commentItem.id = recordid;
-        	commentItem.comment = record;
+        	commentItem.comment = comment;
         	commentItem.datetime = recordTime;
+        	commentItem.record = record;
         	myListViewAdapter.add(commentItem);
         }
 		mListView.setAdapter(myListViewAdapter);

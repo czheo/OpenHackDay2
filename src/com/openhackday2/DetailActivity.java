@@ -1,6 +1,7 @@
 package com.openhackday2;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -27,6 +28,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.webkit.WebView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -39,13 +41,15 @@ public class DetailActivity extends Activity implements OnClickListener {
 	private static final String TESSBASE_PATH = "/mnt/sdcard/tesseract/";
 	private static final String DEFAULT_LANGUAGE = "jpn";
 	private static final String IMAGE_PATH = Environment.getExternalStorageDirectory() + "/open_hack_day.jpg";
-
+	private Uri mImageUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory(), "open_hack_day.jpg"));
+	
 	private WebView webview;
 	private String mHtmlData = "";
 	private SharedPreferences.Editor prefsEditor;
 	private SharedPreferences prefs;
 	private Set<String> recordSet;
 	private String bookId;
+	private EditText comment;
 
 	@SuppressLint({ "SetJavaScriptEnabled", "JavascriptInterface" })
 	@Override
@@ -70,16 +74,7 @@ public class DetailActivity extends Activity implements OnClickListener {
 		prefs = this.getSharedPreferences(
 				"com.openhackday2", Context.MODE_PRIVATE);
 		
-		//dumy
-		prefsEditor = prefs.edit();
-		recordSet = prefs.getStringSet(bookId + ":mine_records", new HashSet<String>());
-		String recordId = "record" + (recordSet.size() + 1);
-		recordSet.add(recordId);
-    	prefsEditor.putStringSet(bookId + ":mine_records", recordSet);
-    	prefsEditor.putString("mine_" + recordId + ":record", "とーーーーても感動した！！！！！！！");
-    	SimpleDateFormat DF = new SimpleDateFormat("yyyy-MM-dd");
-    	prefsEditor.putString("mine_" + recordId + ":recordtime", DF.format(new Date()));
-    	prefsEditor.apply();
+		comment = (EditText) findViewById(R.id.comment);
 
 	}
 
@@ -93,15 +88,20 @@ public class DetailActivity extends Activity implements OnClickListener {
 
 		public void saveWebviewData(String str) {
 			Toast.makeText(DetailActivity.this, str, Toast.LENGTH_SHORT).show();
-			prefsEditor = prefs.edit();
-			recordSet = prefs.getStringSet(bookId + ":mine_records", new HashSet<String>());
-			String recordId = "record" + (recordSet.size() + 1);
-			recordSet.add(recordId);
-        	prefsEditor.putStringSet(bookId + ":mine_records", recordSet);
-        	prefsEditor.putString("mine_" + recordId + ":record", str);
-        	SimpleDateFormat DF = new SimpleDateFormat("yyyy-MM-dd");
-        	prefsEditor.putString("mine_" + recordId + ":recordtime", DF.format(new Date()));
-        	prefsEditor.apply();
+			if (str != null) {
+				prefsEditor = prefs.edit();
+				recordSet = prefs.getStringSet(bookId + ":mine_records",
+						new HashSet<String>());
+				String recordId = "record" + (recordSet.size() + 1);
+				recordSet.add(recordId);
+				prefsEditor.putStringSet(bookId + ":mine_records", recordSet);
+				prefsEditor.putString(bookId + ":mine_" + recordId + ":record", str);
+				prefsEditor.putString(bookId + ":mine_" + recordId + ":comment", comment.getText().toString());
+				SimpleDateFormat DF = new SimpleDateFormat("yyyy-MM-dd");
+				prefsEditor.putString(bookId + ":mine_" + recordId + ":recordtime",
+						DF.format(new Date()));
+				prefsEditor.apply();
+			}
 		}
 	}
 
@@ -113,50 +113,70 @@ public class DetailActivity extends Activity implements OnClickListener {
 			new AlertDialog.Builder(this).setTitle("イメージを選択").setItems(items, new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int item) {
-					Uri imageUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory(), "open_hack_day.jpg"));
-					Intent intent;
 					if (item == 1) {
-						intent = new Intent("android.media.action.IMAGE_CAPTURE");
+						Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+						takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);
+						startActivityForResult(takePhotoIntent, 1);
 					} else {
-						intent = new Intent(Intent.ACTION_GET_CONTENT);
+						Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
 						intent.addCategory(Intent.CATEGORY_OPENABLE);
 						intent.setType("image/jpeg");
+						intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);
+						intent.putExtra("crop", "true");
+						intent.putExtra("aspectX", 3);
+						intent.putExtra("aspectY", 1);
+						intent.putExtra("outputX", 600);
+						intent.putExtra("outputY", 200);
+						intent.putExtra("scale", true);
+						intent.putExtra("return-data", false);
+						startActivityForResult(intent, 0);
 					}
-					intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-					intent.putExtra("crop", "true");
-					intent.putExtra("aspectX", 3);
-					intent.putExtra("aspectY", 1);
-					intent.putExtra("outputX", 600);
-					intent.putExtra("outputY", 200);
 
-					intent.putExtra("scale", true);
-					intent.putExtra("return-data", false);
-
-					startActivityForResult(intent, 0);
 				}
 			}).create().show();
 		} else if (id == R.id.edit_button) {
-//			Intent intent = new Intent(this, DetailActivity.class);
-//			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//			startActivity(intent);
+			// Intent intent = new Intent(this, DetailActivity.class);
+			// intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+			// Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			// startActivity(intent);
 		}
 
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
 
 		if (resultCode == RESULT_OK) {
-			Bitmap bitmap = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory() + "/open_hack_day.jpg");
-			// Bitmap resinzeBitmap = zoomBitmap(bitmap, 10, 10);
-			// if (!bitmap.isRecycled()) {
-			// bitmap.recycle();
-			// }
-			mImage.setImageBitmap(bitmap);
-			ocr();
-
+			if (requestCode == 1) {
+				Intent intent = new Intent("com.android.camera.action.CROP");
+				intent.setDataAndType(mImageUri, "image/*");
+				intent.putExtra("crop", "true");
+				intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);
+				intent.putExtra("aspectX", 3);
+				intent.putExtra("aspectY", 1);
+				intent.putExtra("outputX", 600);
+				intent.putExtra("outputY", 200);
+				intent.putExtra("scale", true);
+				intent.putExtra("return-data", false);
+				startActivityForResult(intent, 2);
+			} else {
+				Bitmap bitmap;
+				try {
+					bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), mImageUri);
+					mImage.setImageBitmap(bitmap);
+					ocr(bitmap);
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
 		}
+
+//		super.onActivityResult(requestCode, resultCode, data);
 	}
 
 	public Bitmap zoomBitmap(Bitmap bitmap, int width, int height) {
@@ -171,11 +191,11 @@ public class DetailActivity extends Activity implements OnClickListener {
 	}
 
 	@SuppressLint("JavascriptInterface")
-	protected void ocr() {
+	protected void ocr(Bitmap bitmap) {
 
-		BitmapFactory.Options options = new BitmapFactory.Options();
-		options.inSampleSize = 2;
-		Bitmap bitmap = BitmapFactory.decodeFile(IMAGE_PATH, options);
+//		BitmapFactory.Options options = new BitmapFactory.Options();
+//		options.inSampleSize = 2;
+//		 = BitmapFactory.decodeFile(IMAGE_PATH, options);
 
 		Log.d(TAG, "---in ocr()  before try--");
 		try {
@@ -237,7 +257,8 @@ public class DetailActivity extends Activity implements OnClickListener {
 		}
 		if (recognizedText.length() != 0) {
 			mHtmlData = recognizedText.trim();
-//			((TextView) findViewById(R.id.detail_ocr_show)).setText(mHtmlData);
+			// ((TextView)
+			// findViewById(R.id.detail_ocr_show)).setText(mHtmlData);
 
 			webview.loadUrl("file:///android_asset/index.html");
 			HtmlShow hs = new HtmlShow();
