@@ -49,7 +49,6 @@ public class DetailActivity extends Activity implements OnClickListener {
 	private SharedPreferences prefs;
 	private Set<String> recordSet;
 	private String bookId;
-	private String bookTitle;
 	private EditText comment;
 
 	@SuppressLint({ "SetJavaScriptEnabled", "JavascriptInterface" })
@@ -60,7 +59,6 @@ public class DetailActivity extends Activity implements OnClickListener {
 		setContentView(R.layout.detail);
 		Intent i = getIntent();
 		bookId = i.getStringExtra("bookid");
-		bookTitle = i.getStringExtra("booktitle");
 		mImage = (ImageView) findViewById(R.id.detail_image);
 		findViewById(R.id.detail_button).setOnClickListener(this);
 		findViewById(R.id.edit_button).setOnClickListener(this);
@@ -97,11 +95,10 @@ public class DetailActivity extends Activity implements OnClickListener {
 				String recordId = "record" + (recordSet.size() + 1);
 				recordSet.add(recordId);
 				prefsEditor.putStringSet(bookId + ":mine_records", recordSet);
-				prefsEditor.putString("mine_" + recordId + ":record", str);
-				prefsEditor.putString("mine_" + recordId + ":comment", comment.getText().toString());
-				prefsEditor.putString("mine_" + recordId + ":title", bookTitle);
+				prefsEditor.putString(bookId + ":mine_" + recordId + ":record", str);
+				prefsEditor.putString(bookId + ":mine_" + recordId + ":comment", comment.getText().toString());
 				SimpleDateFormat DF = new SimpleDateFormat("yyyy-MM-dd");
-				prefsEditor.putString("mine_" + recordId + ":recordtime",
+				prefsEditor.putString(bookId + ":mine_" + recordId + ":recordtime",
 						DF.format(new Date()));
 				prefsEditor.apply();
 			}

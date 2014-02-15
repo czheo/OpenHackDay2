@@ -2,7 +2,9 @@ package com.openhackday2;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -62,6 +64,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	private SharedPreferences prefs;
 	private SharedPreferences.Editor prefsEditor;
 	private Set<String> bookSet;
+	private Set<String> allRecordSet;
 
 	
 	@Override
@@ -309,6 +312,17 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 						        				imageUrl);
 						        		prefsEditor.putString(bookid + ":title", bookTitle);
 						        		prefsEditor.putString(bookid + ":author", bookAuthor);
+						        		//仮データ追加
+						        		allRecordSet = prefs.getStringSet(bookid + ":all_records",
+												new HashSet<String>());
+										String recordId = "record" + (allRecordSet.size() + 1);
+										allRecordSet.add(recordId);
+										prefsEditor.putStringSet(bookid + ":all_records", allRecordSet);
+										prefsEditor.putString(bookid + ":all_" + recordId + ":record", "みんなのレコード");
+										prefsEditor.putString(bookid + ":all_" + recordId + ":comment", "みんなのコメント");
+										SimpleDateFormat DF = new SimpleDateFormat("yyyy-MM-dd");
+										prefsEditor.putString(bookid + ":all_" + recordId + ":recordtime",
+												DF.format(new Date()));
 						        		prefsEditor.apply();
 						        		item.key = bookid;
 						        		item.url = imageUrl;

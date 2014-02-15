@@ -76,9 +76,9 @@ public class MineListActivity extends Activity implements OnClickListener {
         Iterator<String> itr = recordSet.iterator();
         while(itr.hasNext()){
         	String recordid = itr.next();
-        	String record = prefs.getString("mine_" + recordid + ":record", "");
-        	String comment = prefs.getString("mine_" + recordid + ":comment", "");
-        	String recordTime = prefs.getString("mine_" + recordid + ":recordtime", "");
+        	String record = prefs.getString(bookId + ":mine_" + recordid + ":record", "");
+        	String comment = prefs.getString(bookId + ":mine_" + recordid + ":comment", "");
+        	String recordTime = prefs.getString(bookId + ":mine_" + recordid + ":recordtime", "");
         	CommentItem commentItem = new CommentItem();
         	commentItem.id = recordid;
         	commentItem.comment = comment;
@@ -100,7 +100,6 @@ public class MineListActivity extends Activity implements OnClickListener {
         if (id == R.id.mine_list_add_button) {
         	Intent intent = new Intent(this,DetailActivity.class);
         	intent.putExtra("bookid", bookId);
-        	intent.putExtra("booktitle", bookTitle);
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
         }
