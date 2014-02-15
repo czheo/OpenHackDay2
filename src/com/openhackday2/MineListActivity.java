@@ -34,37 +34,57 @@ import android.widget.TextView;
 
 public class MineListActivity extends Activity implements OnClickListener {
 	private ListView mListView;
+	private TextView mTextView;
 	private SharedPreferences prefs;
-	private Set<String> bookSet;
+	private String bookId;
+	private Set<String> recordSet;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.mine_list);
+		Intent i = getIntent();
+		bookId = i.getStringExtra("bookid");
 
+		prefs = this.getSharedPreferences(
+				"com.openhackday2", Context.MODE_PRIVATE);
+		
+        String bookTitle = prefs.getString(bookId + ":title", "");
+        mTextView = (TextView) findViewById(R.id.mine_title);
+        mTextView.setText(bookTitle);
+        
 		//list view 
 		mListView = (ListView) findViewById(R.id.mine_list_listview);
 
 		MineListListviewAdapter myListViewAdapter = new MineListListviewAdapter(this);
-		mListView.setAdapter(myListViewAdapter);
 
 		mListView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 				Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
+				intent.putExtra("bookid", bookId);
 				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(intent);
 			}
 		});
-
-		prefs = this.getSharedPreferences(
-				"com.openhackday2", Context.MODE_PRIVATE);
-		
-        bookSet = prefs.getStringSet("books", new HashSet<String>());
         
-
+       recordSet = prefs.getStringSet(bookId + ":mine_records", new HashSet<String>());
+        
+        Iterator<String> itr = recordSet.iterator();
+        while(itr.hasNext()){
+        	String recordid = itr.next();
+        	String record = prefs.getString("mine_" + recordid + ":record", "");
+        	String recordTime = prefs.getString("mine_" + recordid + ":recordtime", "");
+        	CommentItem commentItem = new CommentItem();
+        	commentItem.id = recordid;
+        	commentItem.comment = record;
+        	commentItem.datetime = recordTime;
+        	myListViewAdapter.add(commentItem);
+        }
+		mListView.setAdapter(myListViewAdapter);
+        
 		// mViewMy.findViewById(R.id.list_tab_my_add).setOnClickListener(this);
 		findViewById(R.id.mine_list_add_button).setOnClickListener(this);
 
@@ -76,6 +96,7 @@ public class MineListActivity extends Activity implements OnClickListener {
 		int id = v.getId();
         if (id == R.id.mine_list_add_button) {
         	Intent intent = new Intent(this,DetailActivity.class);
+        	intent.putExtra("bookid", bookId);
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
         }
