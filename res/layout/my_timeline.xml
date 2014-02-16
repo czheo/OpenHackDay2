@@ -16,7 +16,7 @@
             android:id="@+id/my_textview_kando"
             style="@style/app_label_h1_ob"
             android:layout_gravity="center"
-            android:layout_weight="5"
+            android:layout_weight="1"
             android:layout_height="120dp"
             android:gravity="center" />
 
@@ -24,7 +24,7 @@
             android:id="@+id/my_textview_hatena"
             style="@style/app_label_h1_ob"
             android:layout_gravity="center"
-            android:layout_weight="5"
+            android:layout_weight="1"
             android:layout_height="120dp"
             android:gravity="center"/>
     </LinearLayout>
