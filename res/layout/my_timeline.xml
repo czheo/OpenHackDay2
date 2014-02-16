@@ -49,5 +49,7 @@
         android:persistentDrawingCache="animation" />
 
     <View style="@style/app_line_o" />
+    
+    <include layout="@layout/tab_button"/>
 
 </LinearLayout>

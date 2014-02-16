@@ -90,6 +90,11 @@ public class MineListActivity extends Activity implements OnClickListener {
         
 		// mViewMy.findViewById(R.id.list_tab_my_add).setOnClickListener(this);
 		findViewById(R.id.mine_list_add_button).setOnClickListener(this);
+		
+		findViewById(R.id.btn_scan_barcode).setOnClickListener(this);
+		findViewById(R.id.main).setOnClickListener(this);
+		findViewById(R.id.main_my).setOnClickListener(this);
+		findViewById(R.id.main_all).setOnClickListener(this);
 
 	}
 
@@ -100,6 +105,21 @@ public class MineListActivity extends Activity implements OnClickListener {
         if (id == R.id.mine_list_add_button) {
         	Intent intent = new Intent(this,DetailActivity.class);
         	intent.putExtra("bookid", bookId);
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+        }else if (id == R.id.btn_scan_barcode) {
+        	Intent openCameraIntent = new Intent(this,CaptureActivity.class);
+			startActivityForResult(openCameraIntent, 0);
+        }else if (id == R.id.main) {
+        	Intent intent = new Intent(this,MainActivity.class);
+        	intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+        }else if (id == R.id.main_my) {
+        	Intent intent = new Intent(this,MyTimeLineActivity.class);
+        	intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+        }else if (id == R.id.main_all) {
+        	Intent intent = new Intent(this,AllTimeLineActivity.class);
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
         }

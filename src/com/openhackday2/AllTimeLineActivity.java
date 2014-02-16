@@ -88,6 +88,10 @@ public class AllTimeLineActivity extends Activity implements OnClickListener, On
 
 //		mViewMy.findViewById(R.id.list_tab_all_add).setOnClickListener(this);
 //		findViewById(R.id.list_tab_save_button).setOnClickListener(this);
+		findViewById(R.id.btn_scan_barcode).setOnClickListener(this);
+		findViewById(R.id.main).setOnClickListener(this);
+		findViewById(R.id.main_my).setOnClickListener(this);
+		findViewById(R.id.main_all).setOnClickListener(this);
 
 	}
 	
@@ -110,6 +114,22 @@ public class AllTimeLineActivity extends Activity implements OnClickListener, On
 //            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 //            startActivity(intent);
 //        }
+		if (id == R.id.btn_scan_barcode) {
+        	Intent openCameraIntent = new Intent(this,CaptureActivity.class);
+			startActivityForResult(openCameraIntent, 0);
+        }else if (id == R.id.main) {
+        	Intent intent = new Intent(this,MainActivity.class);
+        	intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+        }else if (id == R.id.main_my) {
+        	Intent intent = new Intent(this,MyTimeLineActivity.class);
+        	intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+        }else if (id == R.id.main_all) {
+        	Intent intent = new Intent(this,AllTimeLineActivity.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+        }
 	}
 
 	@Override
