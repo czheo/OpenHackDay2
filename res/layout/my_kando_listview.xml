@@ -2,25 +2,31 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/beige"
+    android:background="@null"
     android:orientation="vertical" >
 
     <TextView
         android:id="@+id/my_kando_listview_record"
         android:layout_width="match_parent"
     	android:layout_height="35dp"
-        style="@style/app_default" />
+        style="@style/app_default" 
+        android:textSize="30sp"
+        android:textColor="#000000"/>
     
     <TextView
         android:id="@+id/my_kando_listview_title"
         android:layout_width="match_parent"
     	android:gravity="right"
+    	android:layout_height="15dp"
+    	android:textSize="10sp"
         style="@style/app_default" />
     
     <TextView
         android:id="@+id/my_kando_listview_comment"
         android:layout_width="match_parent"
     	android:layout_height="35dp"
-        style="@style/app_default" />
+        style="@style/app_default" 
+        android:textSize="15sp"
+        android:textColor="#000000"/>
 
 </LinearLayout>
