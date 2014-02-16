@@ -2,12 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f8f4ed"
+    android:background="@drawable/back"
     android:orientation="vertical" >
 
     <TextView
+        android:layout_marginTop="50dp"
         android:id="@+id/mine_title"
         style="@style/app_label_h2"
+        android:textColor="@color/white"
         android:text="タイトル" />
 
     <Button
@@ -18,10 +20,12 @@
     <ListView
         android:id="@+id/mine_list_listview"
         android:layout_width="match_parent"
-        android:layout_height="490dp" >
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="54dp"
+        android:background="@color/white" >
     </ListView>
-    
-    <View style="@style/app_line_o" />
 
     <include layout="@layout/tab_button"/>
     
