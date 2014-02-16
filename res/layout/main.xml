@@ -23,7 +23,7 @@
         android:numColumns="3"
         android:padding="10dp"
         android:stretchMode="columnWidth"
-        android:verticalSpacing="15dp" />
+        android:verticalSpacing="57dp" />
 
 	<include layout="@layout/tab_button"/>
 
