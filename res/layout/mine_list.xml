@@ -18,7 +18,11 @@
     <ListView
         android:id="@+id/mine_list_listview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="490dp" >
     </ListView>
+    
+    <View style="@style/app_line_o" />
+
+    <include layout="@layout/tab_button"/>
     
 </LinearLayout>

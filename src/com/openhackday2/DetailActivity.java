@@ -33,6 +33,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.googlecode.tesseract.android.TessBaseAPI;
+import com.zxing.activity.CaptureActivity;
 
 public class DetailActivity extends Activity implements OnClickListener {
 	private ImageView mImage;
@@ -71,10 +72,14 @@ public class DetailActivity extends Activity implements OnClickListener {
 		HtmlShow hs = new HtmlShow();
 		webview.addJavascriptInterface(hs, "MyContent");
 		
-		prefs = this.getSharedPreferences(
-				"com.openhackday2", Context.MODE_PRIVATE);
+		prefs = this.getSharedPreferences("com.openhackday2", Context.MODE_PRIVATE);
 		
 		comment = (EditText) findViewById(R.id.comment);
+		
+		findViewById(R.id.btn_scan_barcode).setOnClickListener(this);
+		findViewById(R.id.main).setOnClickListener(this);
+		findViewById(R.id.main_my).setOnClickListener(this);
+		findViewById(R.id.main_all).setOnClickListener(this);
 
 	}
 
@@ -87,7 +92,6 @@ public class DetailActivity extends Activity implements OnClickListener {
 		}
 
 		public void saveWebviewData(String str) {
-			Toast.makeText(DetailActivity.this, str, Toast.LENGTH_SHORT).show();
 			if (str != null) {
 				prefsEditor = prefs.edit();
 				recordSet = prefs.getStringSet(bookId + ":mine_records",
@@ -101,6 +105,11 @@ public class DetailActivity extends Activity implements OnClickListener {
 				prefsEditor.putString(bookId + ":mine_" + recordId + ":recordtime",
 						DF.format(new Date()));
 				prefsEditor.apply();
+				Intent intent = new Intent(DetailActivity.this,MineListActivity.class);
+	       
+	        	intent.putExtra("bookid", bookId);
+	            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+	            startActivity(intent);
 			}
 		}
 	}
@@ -139,7 +148,22 @@ public class DetailActivity extends Activity implements OnClickListener {
 			// intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
 			// Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			// startActivity(intent);
-		}
+		} else if (id == R.id.btn_scan_barcode) {
+        	Intent openCameraIntent = new Intent(this,CaptureActivity.class);
+			startActivityForResult(openCameraIntent, 0);
+        }else if (id == R.id.main) {
+        	Intent intent = new Intent(this,MainActivity.class);
+        	intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+        }else if (id == R.id.main_my) {
+        	Intent intent = new Intent(this,MyTimeLineActivity.class);
+        	intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+        }else if (id == R.id.main_all) {
+        	Intent intent = new Intent(this,AllTimeLineActivity.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+        }
 
 	}
 

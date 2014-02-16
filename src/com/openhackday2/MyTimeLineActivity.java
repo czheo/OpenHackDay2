@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import com.zxing.activity.CaptureActivity;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -117,7 +119,11 @@ public class MyTimeLineActivity extends Activity implements OnClickListener, OnP
 
 		// mViewMy.findViewById(R.id.list_tab_my_add).setOnClickListener(this);
 		// findViewById(R.id.list_tab_save_button).setOnClickListener(this);
-
+		
+		findViewById(R.id.btn_scan_barcode).setOnClickListener(this);
+		findViewById(R.id.main).setOnClickListener(this);
+		findViewById(R.id.main_my).setOnClickListener(this);
+		findViewById(R.id.main_all).setOnClickListener(this);
 	}
 
 	private void initImageView() {
@@ -140,6 +146,23 @@ public class MyTimeLineActivity extends Activity implements OnClickListener, OnP
 		// Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		// startActivity(intent);
 		// }
+		
+		if (id == R.id.btn_scan_barcode) {
+        	Intent openCameraIntent = new Intent(this,CaptureActivity.class);
+			startActivityForResult(openCameraIntent, 0);
+        }else if (id == R.id.main) {
+        	Intent intent = new Intent(this,MainActivity.class);
+        	intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+        }else if (id == R.id.main_my) {
+        	Intent intent = new Intent(this,MyTimeLineActivity.class);
+        	intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+        }else if (id == R.id.main_all) {
+        	Intent intent = new Intent(this,AllTimeLineActivity.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+        }
 	}
 
 	@Override
