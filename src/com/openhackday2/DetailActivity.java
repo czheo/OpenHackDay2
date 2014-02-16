@@ -27,6 +27,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.view.WindowManager;
 import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -62,7 +63,6 @@ public class DetailActivity extends Activity implements OnClickListener {
 		bookId = i.getStringExtra("bookid");
 		mImage = (ImageView) findViewById(R.id.detail_image);
 		findViewById(R.id.detail_button).setOnClickListener(this);
-		findViewById(R.id.edit_button).setOnClickListener(this);
 
 		// edit
 		webview = (WebView) this.findViewById(R.id.webview);
@@ -80,6 +80,8 @@ public class DetailActivity extends Activity implements OnClickListener {
 		findViewById(R.id.main).setOnClickListener(this);
 		findViewById(R.id.main_my).setOnClickListener(this);
 		findViewById(R.id.main_all).setOnClickListener(this);
+		
+		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
 	}
 
@@ -143,12 +145,7 @@ public class DetailActivity extends Activity implements OnClickListener {
 
 				}
 			}).create().show();
-		} else if (id == R.id.edit_button) {
-			// Intent intent = new Intent(this, DetailActivity.class);
-			// intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-			// Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			// startActivity(intent);
-		} else if (id == R.id.btn_scan_barcode) {
+		}  else if (id == R.id.btn_scan_barcode) {
         	Intent openCameraIntent = new Intent(this,CaptureActivity.class);
 			startActivityForResult(openCameraIntent, 0);
         }else if (id == R.id.main) {

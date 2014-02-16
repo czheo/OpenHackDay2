@@ -39,7 +39,7 @@
         <activity android:name=".MyTimeLineActivity"  android:screenOrientation="portrait" android:configChanges="orientation|keyboardHidden"></activity>
         <activity android:name=".AllTimeLineActivity"  android:screenOrientation="portrait" android:configChanges="orientation|keyboardHidden"></activity>
         <activity android:name=".MineListActivity"  android:screenOrientation="portrait" android:configChanges="orientation|keyboardHidden"></activity>
-        <activity android:name=".DetailActivity"  android:screenOrientation="portrait" android:configChanges="orientation|keyboardHidden"></activity>
+        <activity android:name=".DetailActivity" android:windowSoftInputMode="stateHidden|adjustResize" android:screenOrientation="portrait" android:configChanges="orientation|keyboardHidden"></activity>
         
     </application>
 
