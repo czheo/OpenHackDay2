@@ -1,7 +1,10 @@
 package com.openhackday2;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import com.zxing.activity.CaptureActivity;
 
@@ -38,6 +41,9 @@ public class AllTimeLineActivity extends Activity implements OnClickListener, On
 	private int mOffset = 0;
 	private int mCurrIndex = 0;
 	private int mImageWidth = 0;
+	private SharedPreferences prefs;
+	private Set<String> recordSet;
+	private Set<String> bookSet;
 
 	public static Bitmap mBitmap;
 
@@ -68,9 +74,31 @@ public class AllTimeLineActivity extends Activity implements OnClickListener, On
 		mTextViewHatena.setOnClickListener(this);
 	
 		mMyListView =(ListView) mViewMy.findViewById(R.id.all_kando_listview);
-
+		// 保存したレコード
+		prefs = this.getSharedPreferences(
+						"com.openhackday2", Context.MODE_PRIVATE);
 		
 		AllKandoListviewAdapter myListViewAdapter = new AllKandoListviewAdapter(this);
+		bookSet = prefs.getStringSet("books", new HashSet<String>());
+        
+        Iterator<String> bookitr = bookSet.iterator();
+        while(bookitr.hasNext()){
+        	String bookid = bookitr.next();
+        	recordSet = prefs.getStringSet(bookid + ":all_records", new HashSet<String>());
+    		Iterator<String> recorditr = recordSet.iterator();
+            while(recorditr.hasNext()){
+            	String recordid = recorditr.next();
+            	String record = prefs.getString(bookid + ":all_" + recordid + ":record", "");
+            	String comment = prefs.getString(bookid + ":all_" + recordid + ":comment", "");
+            	String title = prefs.getString(bookid + ":title", "");
+            	CommentItem commentItem = new CommentItem();
+            	commentItem.id = recordid;
+            	commentItem.comment = comment;
+            	commentItem.title = title;
+            	commentItem.record = record;
+            	myListViewAdapter.add(commentItem);
+            }
+        }
 		mMyListView.setAdapter(myListViewAdapter);
 		
 		mMyListView.setOnItemClickListener(new OnItemClickListener() {
